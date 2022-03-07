@@ -36,3 +36,4 @@ Funkcionalnosti:
 ## Korisni linkovi
 - [Create PDF tutorial](https://www.infoworld.com/article/3605276/how-to-create-pdf-documents-in-aspnet-core-5.html)
 - [Read PDF tutorial](https://stackoverflow.com/questions/60444003/how-can-i-create-and-display-a-pdf-file-for-a-net-core-mvc-web-application)
+- [Trello board](https://trello.com/b/CqAKaHex/fanficfabliaux)
