@@ -21,6 +21,8 @@ Funkcionalnosti:
 -	Označavanje  da se korisniku knjiga sviđa u svrhu rangiranja
 -	Mogućnost promjene korisničkih podataka
 
+## Upute za developere
+- Aplikacija je postavljena da se automatski deploy-ja kada se dogode promjene na master branchu; ključno je razvijati aplikaciju na posebnom branchu i merge-ati s masterom kad je funkcionalnost razvijena
 
 ## Preporučena tehnička potpora
 - [Visual Studio Comumnity 2022](https://visualstudio.microsoft.com/downloads/) (ili 2019) sa .Net-om
@@ -37,3 +39,4 @@ Funkcionalnosti:
 - [Create PDF tutorial](https://www.infoworld.com/article/3605276/how-to-create-pdf-documents-in-aspnet-core-5.html)
 - [Read PDF tutorial](https://stackoverflow.com/questions/60444003/how-can-i-create-and-display-a-pdf-file-for-a-net-core-mvc-web-application)
 - [Trello board](https://trello.com/b/CqAKaHex/fanficfabliaux)
+- [Aplikacija](https://fanficfabliaux.azurewebsites.net)
