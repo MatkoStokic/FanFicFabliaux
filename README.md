@@ -22,7 +22,13 @@ Funkcionalnosti:
 -	Mogućnost promjene korisničkih podataka
 
 ## Upute za developere
-- Aplikacija je postavljena da se automatski deploy-ja kada se dogode promjene na master branchu; ključno je razvijati aplikaciju na posebnom branchu i merge-ati s masterom kad je funkcionalnost razvijena
+- Aplikacija je postavljena da se automatski deploy-ja kada se dogode promjene na master branchu;
+ključno je razvijati aplikaciju na posebnom branchu i merge-ati s masterom kad je funkcionalnost razvijena
+- Koristiti comandu u Packge manager console ```Script-Migration -i -o Data/script.sql``` za kreiranje
+migracijske scripte ako se ne može ažurirati localna baza putem ```Update-Database```
+- Dodani su profili:
+	- MSSQLDatabase za konekciju na server MSSQSLLocalDB
+	- FanFicFabliaux za konekciju na produkcijsku bazu
 
 ## Preporučena tehnička potpora
 - [Visual Studio Comumnity 2022](https://visualstudio.microsoft.com/downloads/) (ili 2019) sa .Net-om
