@@ -1,0 +1,30 @@
+﻿@{ ViewData["Title"] = "WriteBook"; }
+<div class="container my-5">
+    <form class="row g-3">
+        <div class="col-md-4">
+            <label for="inputNaslov" class="form-label">Naslov:</label>
+            <input type="text" class="form-control" id="inputNaslov" required>
+        </div>
+        <div class="col-12 my-2">
+            <label for="inputOznake" class="form-label">Oznake:</label>
+            <input type="text" class="form-control" id="inputOznake" placeholder="#oznaka" required>
+        </div>
+        <div class="col-12 my-2">
+            <label for="inputZanr" class="form-label">Odaberite žanr:</label>
+            <select id="inputZanr" class="form-select" required>
+                <option selected disabled>Choose...</option>
+                <option>Drama</option>
+                <option>Horor</option>
+                <option>Akcija</option>
+                <option>Komedija</option>
+            </select>
+        </div>
+        <div class="col-12 my-3">
+            <label for="inputTextarea" class="form-label">Write</label>
+            <textarea class="form-control" id="inputTextarea" rows="20" required></textarea>
+        </div>
+        <div class="col-12 my-3">
+            <button type="submit" class="btn btn-secondary">Spremi</button>
+        </div>
+    </form>
+</div>

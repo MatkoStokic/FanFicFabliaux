@@ -1,0 +1,132 @@
+﻿@{ ViewData["Title"] = "Index Page"; }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<div className="content_component">
+    <div class="container">
+
+
+        <div class="text-secondary px-4 py-5 text-center">
+            <div class="py-5">
+                <h1 class="display-5 fw-bold text-white">ADVENTURE AWAITS</h1>
+                <div class="col-lg-6 mx-auto">
+                    <p>What are you waiting for!</p>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+
+
+                    }
+                    else { 
+                    
+                         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                             
+                             <a class="nav-link text-white border border-light" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
+                        
+                         </div>
+                    
+                    
+                    }
+
+
+
+               
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row  px-4 my-4">
+            <div class="col-md">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Explore</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="btn btn-secondary">Explore</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Read</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="btn btn-secondary">Read</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Create</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="btn btn-secondary">Create</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="card text-center bg-secondary text-white my-4 pj-4">
+                    <div class="card-body my-4 pj-4">
+                        <i>A reader lives a thousand lives before he dies!</i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row px-4 my-4">
+
+
+
+            <div class="col-md">
+                <div class="col-md">
+                    <div class="card">
+                        <img src="https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">Lorem ipsum</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <a href="#" class="btn btn-secondary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md">
+                <div class="col-md">
+                    <div class="card">
+                        <img src="https://i.picsum.photos/id/1073/5472/3648.jpg?hmac=xCDetU9pLnLGZopbvHOQOkQRhTiYwyrzWc0YyHPzp5Y" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">Lorem ipsum</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <a href="#" class="btn btn-secondary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
