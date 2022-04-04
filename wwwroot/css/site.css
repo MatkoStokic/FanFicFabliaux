@@ -1,15 +1,23 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.text-secondary px-4 py-5 text-center {
+    background-image: url("https://i.picsum.photos/id/2/5616/3744.jpg?hmac=l1XcSPFigtRLcO2F6Li-t17EIeylkWH94Oowb4vzApk");
+    background-size: cover;
+}
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
+.loginSlika {
+    max-width: 100%;
+    height: auto;
+}
+
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {

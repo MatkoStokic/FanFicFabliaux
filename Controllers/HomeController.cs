@@ -23,6 +23,14 @@ namespace FanFicFabliaux.Controllers
             return View();
         }
 
+      
+        public IActionResult ChooseBook()
+        {
+            return View();
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();
