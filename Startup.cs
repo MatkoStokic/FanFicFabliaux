@@ -1,5 +1,9 @@
+using BaselineTypeDiscovery;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
+using FanFicFabliaux.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.IO;
 
 namespace FanFicFabliaux
 {
@@ -31,12 +37,16 @@ namespace FanFicFabliaux
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddSingleton(typeof(WriteBookService));
+            services.AddSingleton(typeof(CategoryService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();

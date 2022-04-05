@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# specified files
+wwwroot/upload/*
+!wwwroot/upload/.gitkeep
+
 # User-specific files
 *.rsuser
 *.suo
