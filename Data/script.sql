@@ -167,7 +167,7 @@ GO
 IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'00000000000000_CreateIdentitySchema')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'00000000000000_CreateIdentitySchema', N'3.1.1');
+    VALUES (N'00000000000000_CreateIdentitySchema', N'3.1.23');
 END;
 
 GO
@@ -223,7 +223,7 @@ GO
 IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220328210656_Initial')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220328210656_Initial', N'3.1.1');
+    VALUES (N'20220328210656_Initial', N'3.1.23');
 END;
 
 GO
@@ -525,7 +525,7 @@ GO
 IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220330194230_Second')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220330194230_Second', N'3.1.1');
+    VALUES (N'20220330194230_Second', N'3.1.23');
 END;
 
 GO

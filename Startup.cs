@@ -39,8 +39,8 @@ namespace FanFicFabliaux
             services.AddRazorPages();
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-            services.AddSingleton(typeof(WriteBookService));
-            services.AddSingleton(typeof(CategoryService));
+            services.AddScoped(typeof(WriteBookService));
+            services.AddScoped(typeof(CategoryService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
