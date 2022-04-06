@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FanFicFabliaux.Models.Mail;
 
 namespace FanFicFabliaux
 {
@@ -37,6 +38,8 @@ namespace FanFicFabliaux
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddScoped(typeof(WriteBookService));
             services.AddScoped(typeof(CategoryService));
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
