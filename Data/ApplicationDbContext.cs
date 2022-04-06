@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FanFicFabliaux.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        protected ApplicationDbContext(){}
+        protected ApplicationDbContext() { }
 
         public DbSet<Book> Books { get; set; }
         public DbSet<BookState> BookStates { get; set; }
@@ -22,6 +22,18 @@ namespace FanFicFabliaux.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder
+                .Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Subscriptions)
+                .HasForeignKey(s => s.UserId);
+
+            builder
+                .Entity<Subscription>()
+                .HasOne(s => s.Author)
+                .WithMany(u => u.Subscribers)
+                .HasForeignKey(s => s.AuthorId);
 
             builder
                 .Entity<BookTag>()
@@ -38,15 +50,15 @@ namespace FanFicFabliaux.Data
             builder
                 .Entity<BookTag>()
                 .HasData(
-                    new BookTag { Id = 1, TagId = 1, BookId = 1},
-                    new BookTag { Id = 2, TagId = 1, BookId = 2 }, 
+                    new BookTag { Id = 1, TagId = 1, BookId = 1 },
+                    new BookTag { Id = 2, TagId = 1, BookId = 2 },
                     new BookTag { Id = 3, TagId = 1, BookId = 3 }
                 );
 
             builder
                 .Entity<Category>()
                 .HasData(
-                    new Category { Id = 1, CategoryName = "Fantasy"},
+                    new Category { Id = 1, CategoryName = "Fantasy" },
                     new Category { Id = 2, CategoryName = "Mystery" },
                     new Category { Id = 3, CategoryName = "Romance" },
                     new Category { Id = 4, CategoryName = "Thriller" }

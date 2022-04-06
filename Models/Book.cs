@@ -27,7 +27,6 @@ namespace FanFicFabliaux.Models
         
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<BookState> BookStates { get; set; }
-        public virtual ICollection<Subscription> Subscriptions { get; set; }
         public virtual ICollection<BookTag> BookTags { get; set; }
     }
 }
