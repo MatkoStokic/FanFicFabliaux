@@ -1,6 +1,4 @@
-﻿using DinkToPdf;
-using DinkToPdf.Contracts;
-using FanFicFabliaux.Data;
+﻿using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -8,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace FanFicFabliaux.Services
 {

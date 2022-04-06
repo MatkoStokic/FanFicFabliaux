@@ -1,8 +1,6 @@
-using BaselineTypeDiscovery;
-using DinkToPdf;
-using DinkToPdf.Contracts;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 using FanFicFabliaux.Data;
-using FanFicFabliaux.Models;
 using FanFicFabliaux.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.IO;
 
 namespace FanFicFabliaux
 {
