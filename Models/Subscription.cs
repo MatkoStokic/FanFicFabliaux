@@ -16,8 +16,8 @@ namespace FanFicFabliaux.Models
         public string UserId { get; set; }
         public User User { get; set; }
 
-        [ForeignKey(nameof(Book))]
-        public int BookId { get; set; }
-        public Book Book { get; set; }
+        [ForeignKey(nameof(User))]
+        public string AuthorId { get; set; }
+        public User Author { get; set; }
     }
 }

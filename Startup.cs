@@ -36,8 +36,11 @@ namespace FanFicFabliaux
             services.AddRazorPages();
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddSingleton(typeof(MailService));
+
             services.AddScoped(typeof(WriteBookService));
             services.AddScoped(typeof(CategoryService));
+            services.AddScoped(typeof(SubscriptionService));
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }

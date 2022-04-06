@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FanFicFabliaux.Models
 {
@@ -9,6 +10,8 @@ namespace FanFicFabliaux.Models
         public virtual ICollection<Book> Books { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<BookState> BookStates { get; set; }
+
+        [ForeignKey("UserId")]
         public virtual ICollection<Subscription> Subscriptions { get; set; }
     }
 }

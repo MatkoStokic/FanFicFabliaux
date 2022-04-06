@@ -16,15 +16,18 @@ namespace FanFicFabliaux.Services
         private readonly IWebHostEnvironment _hostEnviroment;
         private readonly IConverter _converter;
         private readonly ApplicationDbContext _context;
+        private readonly SubscriptionService _subscriptionService;
 
         public WriteBookService(
             IWebHostEnvironment hostEnviroment,
             IConverter converter,
-            ApplicationDbContext context)
+            ApplicationDbContext context, 
+            SubscriptionService subscriptionService)
         {
             _hostEnviroment = hostEnviroment;
             _converter = converter;
             _context = context;
+            _subscriptionService = subscriptionService;
         }
 
         public async Task WriteBook(string userId, string naslov, string oznake, int zanr, string tekst)
@@ -35,10 +38,12 @@ namespace FanFicFabliaux.Services
             var filePath = Path.Combine(uploads, uniqueFileName);
 
             GeneratePdf(naslov, tekst, filePath);
-            await SaveToDb(userId, naslov, oznake, zanr, uniqueFileName);
+
+            Book book = await SaveToDb(userId, naslov, oznake, zanr, uniqueFileName);
+            await _subscriptionService.SendMailToSubscribersAsync(userId, book.Id);
         }
 
-        private async Task SaveToDb(string userId, string naslov, string oznake, int zanr, string uniqueFileName)
+        private async Task<Book> SaveToDb(string userId, string naslov, string oznake, int zanr, string uniqueFileName)
         {
             Book book = new Book
             {
@@ -83,6 +88,8 @@ namespace FanFicFabliaux.Services
 
             await _context.BookTags.AddRangeAsync(bookTags);
             await _context.SaveChangesAsync();
+
+            return book;
         }
 
         public void GeneratePdf(string naslov, string tekst, string path)
