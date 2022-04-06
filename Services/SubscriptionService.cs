@@ -1,8 +1,6 @@
 ﻿using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
 using FanFicFabliaux.Models.Mail;
-using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,17 +24,20 @@ namespace FanFicFabliaux.Services
                 .Where(sub => sub.AuthorId.Equals(authorId))
                 .ToList();
             User author = _context.Users.Find(authorId);
-            Book book = _context.Books.Find(bookId);
+            Book book = _context.Books.Where(b => b.Id.Equals(bookId)).FirstOrDefault();
 
             foreach(Subscription subscription in subscriptions)
             {
+                User user = _context.Users.Find(subscription.UserId);
+                Category category = _context.Categories.Find(book.CategoryId);
+
                 SubscriptionMail mail = new SubscriptionMail
                 {
-                    ToEmail = author.Email,
-                    Username = subscription.User.UserName,
+                    ToEmail = user.Email,
+                    Username = user.UserName,
                     Author = author.UserName,
                     BookTitle = book.Title,
-                    Genre = book.Category.CategoryName,
+                    Genre = category.CategoryName,
                     Date = book.LastUpdateDate
                 };
 

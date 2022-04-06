@@ -12,11 +12,9 @@ namespace FanFicFabliaux.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(User))]
         public string UserId { get; set; }
         public User User { get; set; }
 
-        [ForeignKey(nameof(User))]
         public string AuthorId { get; set; }
         public User Author { get; set; }
     }
