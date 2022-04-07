@@ -36,6 +36,14 @@ namespace FanFicFabliaux
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services
+                 .AddAuthentication()
+                 .AddCookie(options =>
+                 {
+                     options.LoginPath = "/login";
+                     options.LogoutPath = "/logout";
+                 });
+
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddSingleton(typeof(MailService));
 

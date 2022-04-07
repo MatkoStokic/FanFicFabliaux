@@ -27,6 +27,7 @@ namespace FanFicFabliaux.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult WriteBook()
         {
             WriteBookModel model = new WriteBookModel
@@ -39,6 +40,7 @@ namespace FanFicFabliaux.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SaveBook(WriteBookModel.InputModel Input)
         {
             if (ModelState.IsValid)
@@ -56,10 +58,13 @@ namespace FanFicFabliaux.Controllers
             return View("WriteBook", model);
         }
 
+        [AllowAnonymous]
         public IActionResult ChooseBook()
         {
             return View();
         }
+
+        [AllowAnonymous]
         public IActionResult BookData()
         {
             return View();
