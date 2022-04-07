@@ -51,10 +51,21 @@ namespace FanFicFabliaux.Controllers
         [Authorize]
         public async Task<IActionResult> SaveBook(WriteBookModel.InputModel Input)
         {
+            if (Input.Tekst != null)
+            {
+                ModelState.ClearValidationState("Input.Datoteka");
+                ModelState.MarkFieldValid("Input.Datoteka");
+            }
+            else if (Input.Datoteka != null)
+            {
+                ModelState.ClearValidationState("Input.Tekst");
+                ModelState.MarkFieldValid("Input.Tekst");
+            }
+
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await _writeBookService.WriteBook(userId, Input.Naslov, Input.Oznake, Input.Zanr.Value, Input.Tekst);
+                await _writeBookService.WriteBook(userId, Input);
                 return LocalRedirect("~/");
             }
 
@@ -72,7 +83,7 @@ namespace FanFicFabliaux.Controllers
             ChooseBookModel model = new ChooseBookModel
             {
                 Books = _readBookService.GetBooksByFilter(filter),
-                Filter = filter != null ? filter: new BookFilter(),
+                Filter = filter ?? new BookFilter(),
                 Options = _categoryService.GetCategoryOptions()
             };
 

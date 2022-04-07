@@ -1,9 +1,7 @@
 ﻿using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using static FanFicFabliaux.Models.ViewModels.ChooseBookModel;
 
 namespace FanFicFabliaux.Services
