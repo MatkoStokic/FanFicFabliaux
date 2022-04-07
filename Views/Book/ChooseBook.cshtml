@@ -5,7 +5,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-2">
+        <div class="col-4">
             <form asp-action="ChooseBook" method="get">
                 <h3>Filter</h3>
                 <div class="col-12 my-2">
@@ -14,7 +14,7 @@
                     <span asp-validation-for="Filter.BookName" class="text-danger"></span>
                 </div>
                 <div class="col-12 my-2">
-                    <label asp-for="Filter.AuthorName" class="form-label">Book Title:</label>
+                    <label asp-for="Filter.AuthorName" class="form-label">Author name:</label>
                     <input asp-for="Filter.AuthorName" class="form-control" />
                     <span asp-validation-for="Filter.AuthorName" class="text-danger"></span>
                 </div>
@@ -24,7 +24,7 @@
                     <span asp-validation-for="Filter.Genre" class="text-danger"></span>
                 </div>
                 <div class="col-12 my-2">
-                    <label asp-for="Filter.Tags" class="form-label">Book Title:</label>
+                    <label asp-for="Filter.Tags" class="form-label">Tags:</label>
                     <input asp-for="Filter.Tags" class="form-control" />
                     <span asp-validation-for="Filter.Tags" class="text-danger"></span>
                 </div>
@@ -33,13 +33,14 @@
                 </div>
             </form>
         </div>
-        <div class="col-10">
+        <div class="col-8">
             <h2>Explore books</h2>
             <div class="list-group my-2">
 
             @foreach (Book book in Model.Books)
             {
-                <a class="list-group-item list-group-item-action" aria-current="true" @Url.Action("BookData", "Book", book.Id)>
+                <a class="list-group-item list-group-item-action" aria-current="true" 
+                   href="@Url.Action("BookData", "Book", book.Id)">
                     <div class="d-flex w-50 justify-content-between">
                         <h5 class="mb-1">@Html.DisplayFor(item => book.Title)</h5>
 

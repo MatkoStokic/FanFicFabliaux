@@ -1,6 +1,7 @@
 ﻿using FanFicFabliaux.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace FanFicFabliaux.Data
 {
@@ -71,12 +72,19 @@ namespace FanFicFabliaux.Data
                     new Tag { Id = 2, TagName = "tolkien" }
                 );
 
+            string tolkienId = Guid.NewGuid().ToString();
+            builder
+                .Entity<User>()
+                .HasData(
+                    new User { Id = tolkienId, UserName = "J.R.R. Tolkien" }
+                );
+
             builder
                 .Entity<Book>()
                 .HasData(
-                new Book { Id = 1, Title = "LOTR: Fellowship Of The Ring", Author = "J.R.R. Tolkien", CategoryId = 1 },
-                new Book { Id = 2, Title = "LOTR: Two Towers", Author = "J.R.R. Tolkien", CategoryId = 1 },
-                new Book { Id = 3, Title = "LOTR: The Return Of The King", Author = "J.R.R. Tolkien", CategoryId = 1 }
+                new Book { Id = 1, Title = "LOTR: Fellowship Of The Ring", UserId = tolkienId, CategoryId = 1 },
+                new Book { Id = 2, Title = "LOTR: Two Towers", UserId = tolkienId, CategoryId = 1 },
+                new Book { Id = 3, Title = "LOTR: The Return Of The King", UserId = tolkienId, CategoryId = 1 }
             );
 
         }
