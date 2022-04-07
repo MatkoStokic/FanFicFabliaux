@@ -1,51 +1,54 @@
-﻿@model IEnumerable<FanFicFabliaux.Models.Book>
+﻿@model ChooseBookModel;
 
-@{ ViewData["Title"] = "Index"; }
 @{ ViewData["Title"] = "ChooseBook"; }
 
 
 <div class="container">
     <div class="row">
         <div class="col-2">
-            <div class="input-group rounded">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-secondary">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-            <div class="border-top my-3"></div>
-            <p>Opcije filtriranja</p>
-            <p>Opcije filtriranja</p>
-            <p>Opcije filtriranja</p>
-            <p>Opcije filtriranja</p>
+            <form asp-action="ChooseBook" method="get">
+                <h3>Filter</h3>
+                <div class="col-12 my-2">
+                    <label asp-for="Filter.BookName" class="form-label">Book Title:</label>
+                    <input asp-for="Filter.BookName" class="form-control" />
+                    <span asp-validation-for="Filter.BookName" class="text-danger"></span>
+                </div>
+                <div class="col-12 my-2">
+                    <label asp-for="Filter.AuthorName" class="form-label">Book Title:</label>
+                    <input asp-for="Filter.AuthorName" class="form-control" />
+                    <span asp-validation-for="Filter.AuthorName" class="text-danger"></span>
+                </div>
+                <div class="col-12 my-2">
+                    <label asp-for="Filter.Genre" class="form-label">Genre:</label>
+                    <select asp-for="Filter.Genre" asp-items="Model.Options"></select>
+                    <span asp-validation-for="Filter.Genre" class="text-danger"></span>
+                </div>
+                <div class="col-12 my-2">
+                    <label asp-for="Filter.Tags" class="form-label">Book Title:</label>
+                    <input asp-for="Filter.Tags" class="form-control" />
+                    <span asp-validation-for="Filter.Tags" class="text-danger"></span>
+                </div>
+                <div class="col-12 my-3">
+                    <button type="submit" class="btn btn-secondary">Apply Filter</button>
+                </div>
+            </form>
         </div>
         <div class="col-10">
             <h2>Explore books</h2>
             <div class="list-group my-2">
-                <a class="list-group-item list-group-item-action" aria-current="true"asp-area="" asp-controller="Book" asp-action="BookData">
+
+            @foreach (Book book in Model.Books)
+            {
+                <a class="list-group-item list-group-item-action" aria-current="true" @Url.Action("BookData", "Book", book.Id)>
                     <div class="d-flex w-50 justify-content-between">
-                        <h5 class="mb-1">Naslov</h5>
+                        <h5 class="mb-1">@Html.DisplayFor(item => book.Title)</h5>
 
                     </div>
-                    <p class="mb-1">Autor</p>
-                    <small>Lorem ispum.</small>
+                    <p class="mb-1">@Html.DisplayFor(item => book.User.UserName)</p>
+                    <!-- Nezz sto bi ovo bilo => <small>Lorem ispum.</small> -->
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-50 justify-content-between">
-                        <h5 class="mb-1">Naslov</h5>
+            }
 
-                    </div>
-                    <p class="mb-1">Autor</p>
-                    <small class="text-muted">Lorem ispum</small>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-50 justify-content-between">
-                        <h5 class="mb-1">Naslov</h5>
-
-                    </div>
-                    <p class="mb-1">Autor</p>
-                    <small class="text-muted">Lorem ispum</small>
-                </a>
             </div>
         </div>
     </div>

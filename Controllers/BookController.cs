@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static FanFicFabliaux.Models.ViewModels.ChooseBookModel;
 
 namespace FanFicFabliaux.Controllers
 {
@@ -13,11 +14,18 @@ namespace FanFicFabliaux.Controllers
         private readonly ApplicationDbContext dbContext;
         private readonly WriteBookService _writeBookService;
         private readonly CategoryService _categoryService;
-        public BookController(ApplicationDbContext dbContext, WriteBookService writeBookService, CategoryService categoryService)
+        private readonly ReadBookService _readBookService;
+
+        public BookController(
+            ApplicationDbContext dbContext,
+            WriteBookService writeBookService,
+            CategoryService categoryService,
+            ReadBookService readBookService)
         {
             this.dbContext = dbContext;
             _writeBookService = writeBookService;
             _categoryService = categoryService;
+            _readBookService = readBookService;
         }
 
         [AllowAnonymous]
@@ -59,9 +67,16 @@ namespace FanFicFabliaux.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult ChooseBook()
+        public IActionResult ChooseBook(BookFilter filter)
         {
-            return View();
+            ChooseBookModel model = new ChooseBookModel
+            {
+                Books = _readBookService.GetBooksByFilter(filter),
+                Filter = filter != null ? filter: new BookFilter(),
+                Options = _categoryService.GetCategoryOptions()
+            };
+
+            return View(model);
         }
 
         [AllowAnonymous]
