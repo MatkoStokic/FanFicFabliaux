@@ -1,5 +1,6 @@
 ﻿using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
+using FanFicFabliaux.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
@@ -30,16 +31,22 @@ namespace FanFicFabliaux.Services
             _subscriptionService = subscriptionService;
         }
 
-        public async Task WriteBook(string userId, string naslov, string oznake, int zanr, string tekst)
+        public async Task WriteBook(string userId, WriteBookModel.InputModel Input)
         {
-
-            var uniqueFileName = GetUniqueFileName(naslov + ".pdf");
+            var uniqueFileName = GetUniqueFileName(Input.Naslov + ".pdf");
             var uploads = Path.Combine(_hostEnviroment.WebRootPath, "upload");
             var filePath = Path.Combine(uploads, uniqueFileName);
 
-            GeneratePdf(naslov, tekst, filePath);
+            if (Input.Tekst != null)
+            {
+                GeneratePdf(Input.Naslov, Input.Tekst, filePath);
+            } else
+            {
+                using Stream stream = new FileStream(filePath, FileMode.CreateNew);
+                await Input.Datoteka.CopyToAsync(stream);
+            }
 
-            Book book = await SaveToDb(userId, naslov, oznake, zanr, uniqueFileName);
+            Book book = await SaveToDb(userId, Input.Naslov, Input.Oznake, Input.Zanr.Value, uniqueFileName);
             await _subscriptionService.SendMailToSubscribersAsync(userId, book.Id);
         }
 
@@ -57,7 +64,7 @@ namespace FanFicFabliaux.Services
 
             await _context.Books.AddAsync(book);
 
-            string[] odvojeneOznake = oznake.Split(' ');
+            string[] odvojeneOznake = oznake != null ? oznake.Split(' ') : new string[0];
             List<BookTag> bookTags = new List<BookTag>();
             List<Tag> tags = new List<Tag>();
 
