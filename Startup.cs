@@ -4,7 +4,6 @@ using FanFicFabliaux.Data;
 using FanFicFabliaux.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,12 +35,21 @@ namespace FanFicFabliaux
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services
+                 .AddAuthentication()
+                 .AddCookie(options =>
+                 {
+                     options.LoginPath = "/login";
+                     options.LogoutPath = "/logout";
+                 });
+
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddSingleton(typeof(MailService));
 
             services.AddScoped(typeof(WriteBookService));
             services.AddScoped(typeof(CategoryService));
             services.AddScoped(typeof(SubscriptionService));
+            services.AddScoped(typeof(ReadBookService));
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }

@@ -599,3 +599,53 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220407091641_mock-user')
+BEGIN
+    IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AccessFailedCount', N'ConcurrencyStamp', N'Email', N'EmailConfirmed', N'LockoutEnabled', N'LockoutEnd', N'NormalizedEmail', N'NormalizedUserName', N'PasswordHash', N'PhoneNumber', N'PhoneNumberConfirmed', N'SecurityStamp', N'TwoFactorEnabled', N'UserName') AND [object_id] = OBJECT_ID(N'[AspNetUsers]'))
+        SET IDENTITY_INSERT [AspNetUsers] ON;
+    INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+    VALUES (N'd7be6443-40ac-4998-b1a8-b8d0c5b2d991', 0, N'604265ea-13d5-44ad-88b5-e409297baf85', NULL, CAST(0 AS bit), CAST(0 AS bit), NULL, NULL, NULL, NULL, NULL, CAST(0 AS bit), N'4e9a3696-8a53-4bec-9f14-bb8f3ab789b7', CAST(0 AS bit), N'J.R.R. Tolkien');
+    IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'AccessFailedCount', N'ConcurrencyStamp', N'Email', N'EmailConfirmed', N'LockoutEnabled', N'LockoutEnd', N'NormalizedEmail', N'NormalizedUserName', N'PasswordHash', N'PhoneNumber', N'PhoneNumberConfirmed', N'SecurityStamp', N'TwoFactorEnabled', N'UserName') AND [object_id] = OBJECT_ID(N'[AspNetUsers]'))
+        SET IDENTITY_INSERT [AspNetUsers] OFF;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220407091641_mock-user')
+BEGIN
+    UPDATE [Books] SET [Author] = NULL, [UserId] = N'd7be6443-40ac-4998-b1a8-b8d0c5b2d991'
+    WHERE [Id] = 1;
+    SELECT @@ROWCOUNT;
+
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220407091641_mock-user')
+BEGIN
+    UPDATE [Books] SET [Author] = NULL, [UserId] = N'd7be6443-40ac-4998-b1a8-b8d0c5b2d991'
+    WHERE [Id] = 2;
+    SELECT @@ROWCOUNT;
+
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220407091641_mock-user')
+BEGIN
+    UPDATE [Books] SET [Author] = NULL, [UserId] = N'd7be6443-40ac-4998-b1a8-b8d0c5b2d991'
+    WHERE [Id] = 3;
+    SELECT @@ROWCOUNT;
+
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220407091641_mock-user')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220407091641_mock-user', N'3.1.23');
+END;
+
+GO
+
