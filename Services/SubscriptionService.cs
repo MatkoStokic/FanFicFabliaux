@@ -26,7 +26,7 @@ namespace FanFicFabliaux.Services
             User author = _context.Users.Find(authorId);
             Book book = _context.Books.Where(b => b.Id.Equals(bookId)).FirstOrDefault();
 
-            foreach(Subscription subscription in subscriptions)
+            foreach (Subscription subscription in subscriptions)
             {
                 User user = _context.Users.Find(subscription.UserId);
                 Category category = _context.Categories.Find(book.CategoryId);
@@ -43,6 +43,34 @@ namespace FanFicFabliaux.Services
 
                 await _mailService.SendSubscriptionEmailAsync(mail);
             }
+        }
+
+        internal bool Subscribe(string authorId, string userId, bool unsubscribe)
+        {
+            bool isSubscribed = unsubscribe;
+            Subscription subscription = _context.Subscriptions
+                .Where(sub => sub.AuthorId.Equals(authorId) && sub.UserId.Equals(userId))
+                .FirstOrDefault();
+
+            if (subscription != null && unsubscribe)
+            {
+                _context.Subscriptions.Remove(subscription);
+
+                isSubscribed = false;
+            }
+            else if (subscription == null && !unsubscribe)
+            {
+                _context.Subscriptions.Add(new Subscription
+                {
+                    AuthorId = authorId,
+                    UserId = userId
+                });
+
+                isSubscribed = true;
+            }
+
+            _context.SaveChanges();
+            return isSubscribed;
         }
     }
 }

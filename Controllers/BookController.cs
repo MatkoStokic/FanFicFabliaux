@@ -15,17 +15,23 @@ namespace FanFicFabliaux.Controllers
         private readonly WriteBookService _writeBookService;
         private readonly CategoryService _categoryService;
         private readonly ReadBookService _readBookService;
+        private readonly BookDataService _bookDataService;
+        private readonly SubscriptionService _subscriptionService;
 
         public BookController(
             ApplicationDbContext dbContext,
             WriteBookService writeBookService,
             CategoryService categoryService,
-            ReadBookService readBookService)
+            ReadBookService readBookService,
+            BookDataService bookDataService,
+            SubscriptionService subscriptionService)
         {
             this.dbContext = dbContext;
             _writeBookService = writeBookService;
             _categoryService = categoryService;
             _readBookService = readBookService;
+            _bookDataService = bookDataService;
+            _subscriptionService = subscriptionService;
         }
 
         [AllowAnonymous]
@@ -91,9 +97,25 @@ namespace FanFicFabliaux.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult BookData()
+        public IActionResult BookData(int bookId)
         {
-            return View();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            BookDataModel model = _bookDataService.getModel(bookId, userId);
+
+            if (model == null)
+            {
+                //return not found
+                return View("BookNotFound");
+            }
+
+            return View(model);
+        }
+
+        [Authorize]
+        public bool Subscribe(string AuthorId, bool IsSubscribed)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _subscriptionService.Subscribe(AuthorId, userId, IsSubscribed);
         }
     }
 }
