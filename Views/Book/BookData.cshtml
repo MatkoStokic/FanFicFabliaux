@@ -1,10 +1,11 @@
-﻿
+﻿@model BookDataModel
+
 <div class="container">
     <div class="row">
         <div class="col-2">
-            <p>Name:</p>
-            <p>Author:</p>
-            <p>Rating:</p>
+            <p>Name: @Html.DisplayFor(model => model.Book.Title)</p>
+            <p>Author: @Html.DisplayFor(model => model.Book.Author)</p>
+            <p>Rating: @Html.DisplayFor(model => model.AverageRating)</p>
             <div class="form-group">
                 <span class="text-warning">
                     <i class="ratingStar fas fa-star"></i>
@@ -15,11 +16,21 @@
                 </span>
             </div>
 
-          
+
         </div>
         <div class="col-10">
-         
 
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <form asp-action="Subscribe" method="post" id="subscribeForm">
+                <input type="hidden" asp-for="Book.UserId" name="AuthorId" />
+                <input type="hidden" asp-for="IsSubscribed" />
+                <button id="subscribeBtn" class="btn btn-secondary">Subscribe</button>
+            </form>
 
         </div>
     </div>
@@ -82,3 +93,41 @@
 
     </div>
 </div>
+
+<script>
+    $("#subscribeForm").submit(function (e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var form = $(this);
+        var actionUrl = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                $("#IsSubscribed").val(data);
+                toggleSubscribe(data);
+            }
+        });
+
+    });
+
+    function toggleSubscribe() {
+        var isSubscribed = $("#IsSubscribed").val();
+
+        const subBtn = $("#subscribeBtn");
+        if (isSubscribed === 'true') {
+            subBtn.addClass("btn-outline-secondary");
+            subBtn.removeClass("btn-secondary");
+            subBtn.text("Unsubscribe");
+        } else {
+            subBtn.addClass("btn-secondary");
+            subBtn.removeClass("btn-outline-secondary");
+            subBtn.text("Subscribe");
+        }
+    }
+
+    toggleSubscribe();
+</script>

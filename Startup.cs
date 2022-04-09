@@ -50,6 +50,7 @@ namespace FanFicFabliaux
             services.AddScoped(typeof(CategoryService));
             services.AddScoped(typeof(SubscriptionService));
             services.AddScoped(typeof(ReadBookService));
+            services.AddScoped(typeof(BookDataService));
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }
