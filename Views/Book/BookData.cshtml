@@ -24,7 +24,7 @@
 
         </div>
     </div>
-    <div class="row">
+    <div class="row my-2">
         <div class="col-2">
             <form asp-action="Subscribe" method="post" id="subscribeForm">
                 <input type="hidden" asp-for="Book.UserId" name="AuthorId" />
@@ -32,6 +32,18 @@
                 <button id="subscribeBtn" class="btn btn-secondary">Subscribe</button>
             </form>
 
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-6">
+            <form asp-action="Read" method="post" class="d-inline-block">
+                <input type="hidden" asp-for="Book.Id" name="bookid" />
+                <button id="subscribeBtn" class="btn btn-primary">Read</button>
+            </form>
+
+            <div class="mx-2 d-inline-block align-bottom itemes">
+                @Html.ActionLink("Download", "Download", "Book", new { bookId = Model.Book.Id }, null)
+            </div>
         </div>
     </div>
     <div class="row">

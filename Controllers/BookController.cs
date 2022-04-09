@@ -3,6 +3,7 @@ using FanFicFabliaux.Models.ViewModels;
 using FanFicFabliaux.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using static FanFicFabliaux.Models.ViewModels.ChooseBookModel;
@@ -116,6 +117,22 @@ namespace FanFicFabliaux.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return _subscriptionService.Subscribe(AuthorId, userId, IsSubscribed);
+        }
+
+        [AllowAnonymous]
+        public FileResult Read(int bookId)
+        {
+            var file = _readBookService.GetPdfById(bookId);
+
+            return File(file, "application/pdf");
+        }
+
+        [AllowAnonymous]
+        public FileResult Download(int bookId)
+        {
+            var file = _readBookService.GetPdfById(bookId);
+            string fileName = _readBookService.GetBookTitle(bookId);
+            return File(file, "application/pdf", fileName);
         }
     }
 }

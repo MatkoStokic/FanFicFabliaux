@@ -1,7 +1,10 @@
 ﻿using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
+using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using WkHtmlToPdfDotNet.Contracts;
 using static FanFicFabliaux.Models.ViewModels.ChooseBookModel;
 
 namespace FanFicFabliaux.Services
@@ -9,10 +12,17 @@ namespace FanFicFabliaux.Services
     public class ReadBookService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnviroment;
+        private readonly IConverter _converter;
 
-        public ReadBookService(ApplicationDbContext context)
+        public ReadBookService(
+            ApplicationDbContext context,
+            IWebHostEnvironment hostEnviroment,
+            IConverter converter)
         {
             _context = context;
+            _hostEnviroment = hostEnviroment;
+            _converter = converter;
         }
 
         public List<Book> GetBooksByFilter(BookFilter filter)
@@ -21,7 +31,8 @@ namespace FanFicFabliaux.Services
             if (filter == null)
             {
                 books = GetAll();
-            } else
+            }
+            else
             {
                 books = GetsByFilter(filter);
             }
@@ -32,7 +43,7 @@ namespace FanFicFabliaux.Services
 
         private void PopulateUsers(List<Book> books)
         {
-            foreach(Book book in books)
+            foreach (Book book in books)
             {
                 User user = _context.Users.Find(book.UserId);
                 book.User = user;
@@ -49,7 +60,8 @@ namespace FanFicFabliaux.Services
             List<int> taggedBookIds = null;
             List<string> authorIds = null;
 
-            if (filter.Tags != null) {
+            if (filter.Tags != null)
+            {
                 taggedBookIds = GetIdsByTags(filter.Tags);
             }
             if (filter.AuthorName != null)
@@ -86,6 +98,27 @@ namespace FanFicFabliaux.Services
                 .Select(bt => bt.BookId)
                 .ToList();
             return taggedBookIds;
+        }
+
+        internal FileStream GetPdfById(int bookId)
+        {
+            Book book = _context.Books.Find(bookId);
+            if (book == null || book.URL == null)
+            {
+                return null;
+            }
+
+            var uploads = Path.Combine(_hostEnviroment.WebRootPath, "upload");
+            var filePath = Path.Combine(uploads, book.URL);
+
+            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            return stream;
+        }
+
+        internal string GetBookTitle(int bookId)
+        {
+            return _context.Books.Find(bookId).Title + ".pdf";
         }
     }
 }
