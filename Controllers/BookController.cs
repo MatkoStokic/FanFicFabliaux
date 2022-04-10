@@ -101,7 +101,7 @@ namespace FanFicFabliaux.Controllers
         public IActionResult BookData(int bookId)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            BookDataModel model = _bookDataService.getModel(bookId, userId);
+            BookDataModel model = _bookDataService.GetModel(bookId, userId);
 
             if (model == null)
             {
@@ -120,19 +120,37 @@ namespace FanFicFabliaux.Controllers
         }
 
         [AllowAnonymous]
-        public FileResult Read(int bookId)
+        public IActionResult Read(int bookId)
         {
             var file = _readBookService.GetPdfById(bookId);
+
+            if (file == null)
+            {
+                return View("BookNotFound");
+            }
 
             return File(file, "application/pdf");
         }
 
         [AllowAnonymous]
-        public FileResult Download(int bookId)
+        public IActionResult Download(int bookId)
         {
             var file = _readBookService.GetPdfById(bookId);
+
+            if (file == null)
+            {
+                return View("BookNotFound");
+            }
+
             string fileName = _readBookService.GetBookTitle(bookId);
             return File(file, "application/pdf", fileName);
+        }
+
+        [Authorize]
+        public void Comment(int bookId, string CommentInput)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _bookDataService.SaveComment(bookId, userId, CommentInput);
         }
     }
 }
