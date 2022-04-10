@@ -52,7 +52,10 @@ namespace FanFicFabliaux.Services
 
         private List<Book> GetAll()
         {
-            return _context.Books.ToList();
+            return _context.Books
+                .OrderByDescending(x => x.LastUpdateDate)
+                .Take(10)
+                .ToList();
         }
 
         private List<Book> GetsByFilter(BookFilter filter)
@@ -74,6 +77,8 @@ namespace FanFicFabliaux.Services
                 .Where(book => authorIds == null || authorIds.Contains(book.UserId))
                 .Where(book => filter.BookName == null || book.Title.Contains(filter.BookName))
                 .Where(book => filter.Genre == null || book.CategoryId.Equals(filter.Genre))
+                .OrderByDescending(x => x.LastUpdateDate)
+                .Take(10)
                 .ToList();
         }
 
