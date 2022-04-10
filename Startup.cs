@@ -1,15 +1,12 @@
-using WkHtmlToPdfDotNet;
-using WkHtmlToPdfDotNet.Contracts;
 using FanFicFabliaux.Data;
-using FanFicFabliaux.Services;
+using FanFicFabliaux.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FanFicFabliaux.Models.Mail;
-using FanFicFabliaux.Models;
 
 namespace FanFicFabliaux
 {
@@ -26,39 +23,21 @@ namespace FanFicFabliaux
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services
-                 .AddAuthentication()
-                 .AddCookie(options =>
-                 {
-                     options.LoginPath = "/login";
-                     options.LogoutPath = "/logout";
-                 });
-
-            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-            services.AddSingleton(typeof(MailService));
-
-            services.AddScoped(typeof(WriteBookService));
-            services.AddScoped(typeof(CategoryService));
-            services.AddScoped(typeof(SubscriptionService));
-            services.AddScoped(typeof(ReadBookService));
-            services.AddScoped(typeof(BookDataService));
-
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsProduction())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();

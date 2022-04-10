@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
-    <script src="~/lib/jquery/dist/jquery.js"></script>
     <style>
         body {
             margin: 0;
@@ -41,12 +40,33 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Book" asp-action="WriteBook">Write</a>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="Book" asp-action="WriteBook">Write</a>
+
+                            }
+                            else
+                            {
+
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Write</a>
+
+
+                            }
+
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Book" asp-action="ChooseBook">Read</a>
+                            <a class="nav-link" asp-area="" asp-controller="Book" asp-action="Index">Read</a>
                         </li>
-                    </ul>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Wishlist" asp-action="Wishlist">Wishlist</a>
+                            </li> }
+                        else
+                        { }
+
+                        </ul>
                 </div>
             </div>
         </nav>
@@ -124,7 +144,6 @@
                         </p>
                         <p>
                             <a href="#!" class="text-reset">Settings</a>
-                            <p>TESTROPJOFJO</p>
                         </p>
                         <p>
                             <a href="#!" class="text-reset">Orders</a>

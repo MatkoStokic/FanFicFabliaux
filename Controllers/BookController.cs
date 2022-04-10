@@ -147,10 +147,9 @@ namespace FanFicFabliaux.Controllers
         }
 
         [Authorize]
-        public void Comment(int bookId, string CommentInput)
+        public IActionResult Comment(int bookId, string CommentInput)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            _bookDataService.SaveComment(bookId, userId, CommentInput);
+            return View(this.dbContext.Books);
         }
     }
 }
