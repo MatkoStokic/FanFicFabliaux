@@ -1,36 +1,61 @@
-﻿@{ ViewData["Title"] = "WriteBook"; }
+﻿@model WriteBookModel
+
+@{ ViewData["Title"] = "WriteBook"; }
 <div class="container my-5">
-    <form class="row g-3">
-        <div class="col-md-4">
-            <label for="inputNaslov" class="form-label">Title:</label>
-            <input type="text" class="form-control" id="inputTitle" required>
+    <form class="row g-3" asp-action="SaveBook" method="post" enctype="multipart/form-data">
+        <div class="col-12">
+            <div class="col-md-4">
+                <label asp-for="Input.Naslov" class="form-label">Naslov:</label>
+                <input asp-for="Input.Naslov" class="form-control" />
+                <span asp-validation-for="Input.Naslov" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-12 my-2">
-            <label for="inputOznake" class="form-label">Hashtag:</label>
-            <input type="text" class="form-control" id="inputHashtag" placeholder="#oznaka" required>
+
+        <div class="col-12">
+            <div class="col-md-4 my-3">
+                <label asp-for="Input.Oznake" class="form-label">Oznake:</label>
+                <input asp-for="Input.Oznake" class="form-control" />
+                <span asp-validation-for="Input.Oznake" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-12 my-2">
-            <label for="inputZanr" class="form-label">Choose genre:</label>
-            <select id="inputZanr" class="form-select" required>
-                <option selected disabled>Choose...</option>
-                <option>Drama</option>
-                <option>Horor</option>
-                <option>Akcija</option>
-                <option>Komedija</option>
-            </select>
+
+        <div class="col-12">
+            <div class="col-md-4 my-3">
+                <label asp-for="Input.Zanr" class="form-label">Zanr:</label>
+                <select asp-for="Input.Zanr" asp-items="Model.Options" class="form-control"></select>
+                <span asp-validation-for="Input.Zanr" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-12 my-3">
-            <label for="inputTextarea" class="form-label">Write</label>
-            <textarea class="form-control" id="inputTextarea" rows="20" required></textarea>
+
+        <div class="col-12">
+            <div class="col-md-4 my-3">
+                <label asp-for="Input.Datoteka" class="form-label">Priloži knjigu u PDF formatu</label>
+                <input asp-for="Input.Datoteka" class="form-control" />
+                <span asp-validation-for="Input.Datoteka" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-12 my-3">
-            <button type="submit" class="btn btn-secondary">Save</button>
+
+        <div class="col-12">
+            <div class="col-md-1 my-3">
+                <label class="form-label">ili</label>
+            </div>
         </div>
+
+        <div class="col-12">
+            <div class="col-12 my-3">
+                <label asp-for="Input.Tekst" class="form-label">Napiši knjigu</label>
+                <textarea asp-for="Input.Tekst" class="form-control" rows="20"></textarea>
+                <span asp-validation-for="Input.Tekst" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="col-12 my-3">
+                <button type="submit" class="btn btn-secondary">Spremi</button>
+            </div>
+        </div>
+
     </form>
-    <div class="row">
-        <p>Or upload book from your device</p>
-
-    </div>
-    <button type="submit" class="btn btn-secondary">Upload book</button>
-
 </div>
+
+<script src="@Url.Content("~/js/writeBook.js")"></script>
