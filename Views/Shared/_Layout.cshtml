@@ -40,12 +40,23 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+
+                        <li>
                             <a class="nav-link" asp-area="" asp-controller="Book" asp-action="WriteBook">Write</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Book" asp-action="ChooseBook">Read</a>
+                            <a class="nav-link" asp-area="" asp-controller="Book" asp-action="Index">Read</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Wishlist" asp-action="Wishlist">Wishlist</a>
+                            </li>
+
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -124,7 +135,6 @@
                         </p>
                         <p>
                             <a href="#!" class="text-reset">Settings</a>
-                            <p>TESTROPJOFJO</p>
                         </p>
                         <p>
                             <a href="#!" class="text-reset">Orders</a>

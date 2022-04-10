@@ -1,6 +1,6 @@
-using WkHtmlToPdfDotNet;
-using WkHtmlToPdfDotNet.Contracts;
 using FanFicFabliaux.Data;
+using FanFicFabliaux.Models;
+using FanFicFabliaux.Models.Mail;
 using FanFicFabliaux.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FanFicFabliaux.Models.Mail;
-using FanFicFabliaux.Models;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace FanFicFabliaux
 {
@@ -26,15 +26,14 @@ namespace FanFicFabliaux
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-
             services
                  .AddAuthentication()
                  .AddCookie(options =>
