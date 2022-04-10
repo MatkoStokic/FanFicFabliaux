@@ -151,6 +151,16 @@ namespace FanFicFabliaux.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _bookDataService.SaveComment(bookId, userId, CommentInput);
+        }        
+        
+        public string Rate(int bookId, int rating)
+        {
+            if (!User.Identity.IsAuthenticated) {
+                return "301";
+            }
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _bookDataService.RateBook(bookId, userId, rating);
+            return "";
         }
     }
 }

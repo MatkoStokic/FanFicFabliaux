@@ -30,7 +30,8 @@ namespace FanFicFabliaux.Services
                 Book = book,
                 AverageRating = GetAverageRating(bookId),
                 IsSubscribed = IsSubscribed(userId, book),
-                Comments = GetComments(bookId)
+                Comments = GetComments(bookId),
+                UserRating = GetUserRating(bookId, userId)
             };
         }
 
@@ -44,6 +45,29 @@ namespace FanFicFabliaux.Services
             };
 
             _context.Comments.Add(comment);
+            _context.SaveChanges();
+        }
+
+        public void RateBook(int bookId, string userId, int rating)
+        {
+            BookState state = _context.BookStates
+                .Where(state => state.BookId.Equals(bookId) && state.UserId.Equals(userId))
+                .FirstOrDefault();
+
+            if (state == null)
+            {
+                BookState newState = new BookState
+                {
+                    BookId = bookId,
+                    UserId = userId,
+                    Rating = rating
+                };
+                _context.BookStates.Add(newState);
+            } else
+            {
+                state.Rating = rating;
+            }
+
             _context.SaveChanges();
         }
 
@@ -68,7 +92,7 @@ namespace FanFicFabliaux.Services
                 averageRating = bookRatings.Average();
             }
 
-            return averageRating != 0 ? String.Format("{0:0.00}", averageRating) : "Not rated yet";
+            return averageRating != 0 ? String.Format("{0:0.00}", averageRating) : null;
         }
 
         private List<Comment> GetComments(int bookId)
@@ -91,6 +115,14 @@ namespace FanFicFabliaux.Services
             comments.Reverse();
 
             return comments;
+        }
+
+        private int GetUserRating(int bookId, string userId)
+        {
+            return _context.BookStates
+                .Where(state => state.BookId.Equals(bookId) && state.UserId.Equals(userId))
+                .Select(state => state.Rating)
+                .FirstOrDefault();
         }
     }
 }

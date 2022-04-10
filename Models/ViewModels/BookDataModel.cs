@@ -14,5 +14,7 @@ namespace FanFicFabliaux.Models.ViewModels
 
         public string CommentInput { get; set; }
         public List<Comment> Comments { get; set; }
+        
+        public int UserRating { get; set; }
     }
 }

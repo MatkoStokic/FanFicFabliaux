@@ -5,15 +5,33 @@
         <div class="col-6">
             <p>Name: @Html.DisplayFor(model => model.Book.Title)</p>
             <p>Author: @Html.DisplayFor(model => model.Book.Author)</p>
-            <p>Rating: @Html.DisplayFor(model => model.AverageRating)</p>
+
+            @if (Model.AverageRating == null)
+            {
+                <p> Rating: Not rated yet</p>
+            }
+            else
+            {
+                <p>
+                    Rating:
+                    <span class="text-warning d-inline-flex">
+                        <i class="ratingStar fas fa-star p-1" id="averageStar1"></i>
+                        <i class="ratingStar far fa-star p-1" id="averageStar2"></i>
+                        <i class="ratingStar far fa-star p-1" id="averageStar3"></i>
+                        <i class="ratingStar far fa-star p-1" id="averageStar4"></i>
+                        <i class="ratingStar far fa-star p-1" id="averageStar5"></i>
+                    </span>
+                    (@Html.DisplayFor(model => model.AverageRating))
+                </p>
+            }
             <div class="form-group">
-                <span class="text-warning">
-                    <i class="ratingStar fas fa-star"></i>
-                    <i class="ratingStar far fa-star"></i>
-                    <i class="ratingStar far fa-star"></i>
-                    <i class="ratingStar far fa-star"></i>
-                    <i class="ratingStar far fa-star"></i>
-                </span>
+                <div class="text-warning d-flex" id="inputStarDiv">
+                    <i class="ratingStar fas fa-star p-1" style="cursor:pointer" id="inputStar1"></i>
+                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar2"></i>
+                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar3"></i>
+                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar4"></i>
+                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar5"></i>
+                </div>
             </div>
         </div>
     </div>
@@ -29,7 +47,7 @@
             }
             else
             {
-                <a asp-area="Identity" asp-page="/Account/Login"
+                <a id="loginRedirect" asp-area="Identity" asp-page="/Account/Login"
                    asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
                    class="btn btn-secondary">Subscribe</a>
             }
@@ -167,64 +185,17 @@
 </div>
 
 <script>
-    $("#subscribeForm").submit(function (e) {
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-
-        var form = $(this);
-        var actionUrl = form.attr('action');
-
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: form.serialize(), // serializes the form's elements.
-            success: function (data) {
-                $("#IsSubscribed").val(data);
-                toggleSubscribe(data);
-            }
-        });
-
-    });
-
-    $("#commentForm").submit(function (e) {
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-
-        if ($('#CommentInput').val() === "") {
-            $('#commentErr').text("Cannot post empty comment");
-            return;
-        } else {
-            $('#commentErr').text("");
-        }
-
-        var form = $(this);
-        var actionUrl = form.attr('action');
-
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: form.serialize(), // serializes the form's elements.
-            success: function () {
-                window.location.reload();
-            }
-        });
-
-    });
-
-    function toggleSubscribe() {
-        var isSubscribed = $("#IsSubscribed").val();
-
-        const subBtn = $("#subscribeBtn");
-        if (isSubscribed === 'true') {
-            subBtn.addClass("btn-outline-secondary");
-            subBtn.removeClass("btn-secondary");
-            subBtn.text("Unsubscribe");
-        } else {
-            subBtn.addClass("btn-secondary");
-            subBtn.removeClass("btn-outline-secondary");
-            subBtn.text("Subscribe");
-        }
-    }
-
-    toggleSubscribe();
+    let averageRating = null;
+    const userRating = @Model.UserRating;
+    const rateURL = '@Url.Action("Rate", "Book")';
+    const bookId = @Model.Book.Id;
+    const loginRedirect = $('#loginRedirect').attr('href');
 </script>
+@if (@Model.AverageRating != null)
+{
+    <script>
+        averageRating = @Model.AverageRating;
+    </script>
+}
+
+<script src="~/js/BookData.js"></script>
