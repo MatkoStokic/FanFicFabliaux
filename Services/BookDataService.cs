@@ -16,7 +16,7 @@ namespace FanFicFabliaux.Services
             _context = context;
         }
 
-        public BookDataModel getModel(int bookId, string userId)
+        public BookDataModel GetModel(int bookId, string userId)
         {
             Book book = _context.Books.Find(bookId);
 
@@ -29,8 +29,22 @@ namespace FanFicFabliaux.Services
             {
                 Book = book,
                 AverageRating = GetAverageRating(bookId),
-                IsSubscribed = IsSubscribed(userId, book)
+                IsSubscribed = IsSubscribed(userId, book),
+                Comments = GetComments(bookId)
             };
+        }
+
+        public void SaveComment(int bookId, string userId, string commentText)
+        {
+            Comment comment = new Comment
+            {
+                BookId = bookId,
+                UserId = userId,
+                CommentText = commentText
+            };
+
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
         }
 
         private bool IsSubscribed(string userId, Book book)
@@ -55,6 +69,28 @@ namespace FanFicFabliaux.Services
             }
 
             return averageRating != 0 ? String.Format("{0:0.00}", averageRating) : "Not rated yet";
+        }
+
+        private List<Comment> GetComments(int bookId)
+        {
+            var comments = _context.Comments
+                .Where(comment => comment.BookId.Equals(bookId))
+                .Join(_context.Users,
+                    comment => comment.UserId,
+                    user => user.Id,
+                    (comment, user) =>
+                        new Comment
+                        {
+                            BookId = comment.BookId,
+                            UserId = comment.UserId,
+                            CommentText = comment.CommentText,
+                            User = user
+                        }
+                    )
+                .ToList();
+            comments.Reverse();
+
+            return comments;
         }
     }
 }
