@@ -26,7 +26,7 @@ namespace FanFicFabliaux.Controllers
         }
         public IActionResult BookData()
         {
-            return View();
+            return View(this.dbContext.Books);
         }
     }
 }

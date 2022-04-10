@@ -53,17 +53,20 @@
 
                             }
 
-
-
-
-
-
-
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Book" asp-action="Index">Read</a>
                         </li>
-                    </ul>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Wishlist" asp-action="Wishlist">Wishlist</a>
+                            </li> }
+                        else
+                        { }
+
+                        </ul>
                 </div>
             </div>
         </nav>

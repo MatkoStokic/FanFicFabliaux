@@ -1,41 +1,49 @@
 ﻿@model IEnumerable<FanFicFabliaux.Models.Book>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
+<div class="container">
+    <div class="row">
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        <div class="col-2">
+            <div class="input-group rounded">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-secondary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="border-top my-3"></div>
+            <p>Opcije filtriranja</p>
+            <p>Opcije filtriranja</p>
+            <p>Opcije filtriranja</p>
+            <p>Opcije filtriranja</p>
+        </div>
+
+
+
+        <div class="col-10">
+            <h2>Explore books</h2>
+            <table class="table">
+              
+                    <tr>
+                        @foreach (var item in Model)
+                        {
+            <div class="list-group my-2">
+                <a class="list-group-item list-group-item-action" aria-current="true" asp-area="" asp-controller="Book" asp-action="BookData">
+                    <div class="d-flex w-50 justify-content-between">
+                        <h5 class="mb-1">@Html.DisplayFor(modelItem => item.Title)</h5>
+
+                    </div>
+                    <p class="mb-1"> @Html.DisplayFor(modelItem => item.Author)</p>
+                    <small>Lorem ispum.</small>
+                </a>
+            </div>
 }
-    </tbody>
-</table>
+                    </tr>
+           
+            </table>
+        </div>
+
+    </div>
+
+</div>

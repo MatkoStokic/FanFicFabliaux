@@ -23,25 +23,12 @@
                              
                              <a class="nav-link text-white border border-light" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
                         
-                         </div>
-                    
+                         </div>                  
                     
                     }
-
-
-
-               
-
-
-
-
                 </div>
             </div>
         </div>
-
-
-
-
 
         <div class="row  px-4 my-4">
             <div class="col-md">
@@ -50,7 +37,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Explore</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <a href="#" class="btn btn-secondary">Explore</a>
+                        <a class="btn btn-secondary" asp-area="" asp-controller="Book" asp-action="Index">Explore</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +48,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Read</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <a href="#" class="btn btn-secondary">Read</a>
+                        <a class="btn btn-secondary" asp-area="" asp-controller="Book" asp-action="Index">Read</a>
                     </div>
                 </div>
 
@@ -72,7 +59,19 @@
                     <div class="card-body">
                         <h5 class="card-title">Create</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <a href="#" class="btn btn-secondary">Create</a>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        <a class="btn btn-secondary" asp-area="" asp-controller="Book" asp-action="WriteBook">Create</a>
+
+                        }
+                        else
+                        {
+
+                          <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Login">Create</a>
+
+
+                        }
+
                     </div>
                 </div>
             </div>

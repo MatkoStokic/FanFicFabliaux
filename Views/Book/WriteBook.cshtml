@@ -2,15 +2,15 @@
 <div class="container my-5">
     <form class="row g-3">
         <div class="col-md-4">
-            <label for="inputNaslov" class="form-label">Naslov:</label>
-            <input type="text" class="form-control" id="inputNaslov" required>
+            <label for="inputNaslov" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="inputTitle" required>
         </div>
         <div class="col-12 my-2">
-            <label for="inputOznake" class="form-label">Oznake:</label>
-            <input type="text" class="form-control" id="inputOznake" placeholder="#oznaka" required>
+            <label for="inputOznake" class="form-label">Hashtag:</label>
+            <input type="text" class="form-control" id="inputHashtag" placeholder="#oznaka" required>
         </div>
         <div class="col-12 my-2">
-            <label for="inputZanr" class="form-label">Odaberite žanr:</label>
+            <label for="inputZanr" class="form-label">Choose genre:</label>
             <select id="inputZanr" class="form-select" required>
                 <option selected disabled>Choose...</option>
                 <option>Drama</option>
@@ -24,7 +24,13 @@
             <textarea class="form-control" id="inputTextarea" rows="20" required></textarea>
         </div>
         <div class="col-12 my-3">
-            <button type="submit" class="btn btn-secondary">Spremi</button>
+            <button type="submit" class="btn btn-secondary">Save</button>
         </div>
     </form>
+    <div class="row">
+        <p>Or upload book from your device</p>
+
+    </div>
+    <button type="submit" class="btn btn-secondary">Upload book</button>
+
 </div>

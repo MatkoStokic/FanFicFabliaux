@@ -34,6 +34,7 @@ namespace FanFicFabliaux.Data.Migrations
                 table: "Books",
                 columns: new[] { "Id", "Author", "Title" },
                 values: new object[] { 3, null, "LOTR: The Return Of The King" });
+      
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
