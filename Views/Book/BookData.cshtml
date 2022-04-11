@@ -64,7 +64,7 @@
                 <form asp-action="Subscribe" method="post" id="subscribeForm">
                     <input type="hidden" asp-for="Book.UserId" name="AuthorId" />
                     <input type="hidden" asp-for="IsSubscribed" />
-                    <button id="subscribeBtn" class="btn btn-secondary">Subscribe</button>
+                    <button id="subscribeBtn" class="btn btn-secondary"><i class="fa-regular fa-bell m-1"></i><span>Subscribe</span></button>
                 </form>
             }
             else

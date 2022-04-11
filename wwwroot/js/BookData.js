@@ -49,11 +49,11 @@ function toggleSubscribe() {
     if (isSubscribed === 'true') {
         subBtn.addClass("btn-outline-secondary");
         subBtn.removeClass("btn-secondary");
-        subBtn.text("Unsubscribe");
+        subBtn.children("span").text('Unsubscribe');
     } else {
         subBtn.addClass("btn-secondary");
         subBtn.removeClass("btn-outline-secondary");
-        subBtn.text("Subscribe");
+        subBtn.children("span").text('Subscribe');
     }
 }
 
