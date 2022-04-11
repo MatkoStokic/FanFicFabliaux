@@ -22,7 +22,7 @@ namespace FanFicFabliaux.Services
         public WriteBookService(
             IWebHostEnvironment hostEnviroment,
             IConverter converter,
-            ApplicationDbContext context, 
+            ApplicationDbContext context,
             SubscriptionService subscriptionService)
         {
             _hostEnviroment = hostEnviroment;
@@ -40,7 +40,8 @@ namespace FanFicFabliaux.Services
             if (Input.Tekst != null)
             {
                 GeneratePdf(Input.Naslov, Input.Tekst, filePath);
-            } else
+            }
+            else
             {
                 using Stream stream = new FileStream(filePath, FileMode.CreateNew);
                 await Input.Datoteka.CopyToAsync(stream);
@@ -103,8 +104,9 @@ namespace FanFicFabliaux.Services
         {
             var html = $@"
                <!DOCTYPE html>
-               <html lang=""en"">
+               <html>
                <head>
+                <meta charset='utf-8'>
                </head>
               <body>
               <h1> {naslov} </h1>
@@ -130,7 +132,6 @@ namespace FanFicFabliaux.Services
             FooterSettings footerSettings = new FooterSettings();
             footerSettings.FontSize = 12;
             footerSettings.FontName = "Ariel";
-            footerSettings.Center = "This is for demonstration purposes only.";
             footerSettings.Line = true;
             objectSettings.HeaderSettings = headerSettings;
             objectSettings.FooterSettings = footerSettings;
