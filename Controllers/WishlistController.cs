@@ -14,7 +14,8 @@ namespace FanFicFabliaux.Controllers
         [AllowAnonymous]
         public IActionResult Wishlist()
         {
-            return View(this.dbContext.Books);
+            var wishlist = this.dbContext.Books;
+            return View(wishlist);
         }
   
     }

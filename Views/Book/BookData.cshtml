@@ -1,14 +1,43 @@
 ﻿@model BookDataModel
 
 <div class="container">
-    <div class="row">
+    <div class="row mt-5">
+        <div class="col-12 my-5">
+            <p style="font-size: 2rem; display: inline;">Name: </p><p style="display: inline;">@Html.DisplayFor(model => model.Book.Title)</p>
+            <div></div>
+            <p style="font-size: 2rem; display: inline;">Author: @Html.DisplayFor(model => model.Book.Author)</p><p></p>
+        </div>
         <div class="col-6">
-            <p>Name: @Html.DisplayFor(model => model.Book.Title)</p>
-            <p>Author: @Html.DisplayFor(model => model.Book.Author)</p>
+            <form asp-action="Read" method="get" class="d-inline-block">
+                <input type="hidden" asp-for="Book.Id" name="bookid" />
+                <button class="btn btn-secondary">Read book</button>
+            </form>
+
+            <div class="mx-2 d-inline-block align-bottom itemes btn btn-secondary">
+                @Html.ActionLink("Download", "Download", "Book", new { bookId = Model.Book.Id }, null)
+            </div>
+        </div>
+        <div class="col-12 border-top border-secondary my-5">
+            <p></p>
+        </div>
+
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-8">
 
             @if (Model.AverageRating == null)
             {
-                <p> Rating: Not rated yet</p>
+                <p> Rate: Not rated yet</p>
+                <div class="form-group">
+                    <div class="text-warning d-flex" id="inputStarDiv">
+                        <i class="ratingStar fas fa-star p-1" style="cursor:pointer" id="inputStar1"></i>
+                        <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar2"></i>
+                        <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar3"></i>
+                        <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar4"></i>
+                        <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar5"></i>
+                    </div>
+                </div>
             }
             else
             {
@@ -24,18 +53,11 @@
                     (@Html.DisplayFor(model => model.AverageRating))
                 </p>
             }
-            <div class="form-group">
-                <div class="text-warning d-flex" id="inputStarDiv">
-                    <i class="ratingStar fas fa-star p-1" style="cursor:pointer" id="inputStar1"></i>
-                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar2"></i>
-                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar3"></i>
-                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar4"></i>
-                    <i class="ratingStar far fa-star p-1" style="cursor:pointer" id="inputStar5"></i>
-                </div>
-            </div>
+
         </div>
-    </div>
-    <div class="row my-2">
+        <div class="col-2">
+            <a class="btn btn-danger" asp-area="" asp-controller="Book" asp-action="Index"><i class="far fa-heart m-1"></i>Add to wishlist</a>
+        </div>
         <div class="col-2">
             @if (User.Identity.IsAuthenticated)
             {
@@ -49,37 +71,11 @@
             {
                 <a id="loginRedirect" asp-area="Identity" asp-page="/Account/Login"
                    asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
-                   class="btn btn-secondary">Subscribe</a>
+                   class="btn btn-secondary"><i class="fa-regular fa-bell m-1"></i>Subscribe</a>
             }
         </div>
-    </div>
-
-    <div class="row m-3">
-        <div class="col-sm">
-            <a class="btn btn-secondary" asp-area="" asp-controller="Book" asp-action="Index">Read book</a>
-        </div>
-        <div class="col-sm">
-            <a class="btn btn-secondary" asp-area="" asp-controller="Book" asp-action="Index">Download</a>
-        </div>
-        <div class="col-sm">
-            <a class="btn btn-danger" asp-area="" asp-controller="Book" asp-action="Index"><i class="far fa-heart"></i>Add to wishlist</a>
-        </div>
-    </div>
-
-    <div class="row my-3">
-        <div class="col-6">
-            <form asp-action="Read" method="get" class="d-inline-block">
-                <input type="hidden" asp-for="Book.Id" name="bookid" />
-                <button class="btn btn-primary">Read</button>
-            </form>
-
-            <div class="mx-2 d-inline-block align-bottom itemes">
-                @Html.ActionLink("Download", "Download", "Book", new { bookId = Model.Book.Id }, null)
-            </div>
-        </div>
-    </div>
+  </div>
     <div class="row">
-        <h2>Comments</h2>
 
         <section class="col-12" style="background-color: #eee;">
             <div class="container my-5 py-5">
