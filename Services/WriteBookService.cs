@@ -33,7 +33,7 @@ namespace FanFicFabliaux.Services
 
         public async Task WriteBook(string userId, WriteBookModel.InputModel Input)
         {
-            var uniqueFileName = GetUniqueFileName(Input.Naslov + ".pdf");
+            var uniqueFileName = Guid.NewGuid().ToString().Substring(0, 16) + ".pdf";
             var uploads = Path.Combine(_hostEnviroment.WebRootPath, "upload");
             var filePath = Path.Combine(uploads, uniqueFileName);
 
@@ -143,15 +143,6 @@ namespace FanFicFabliaux.Services
                 Objects = { objectSettings },
             };
             _converter.Convert(htmlToPdfDocument);
-        }
-
-        private string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName)
-                      + "_"
-                      + Guid.NewGuid().ToString().Substring(0, 4)
-                      + Path.GetExtension(fileName);
         }
     }
 }
