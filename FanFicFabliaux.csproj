@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\upload\test " />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Templates\SubscriptionTemplate.html" />
   </ItemGroup>
 
