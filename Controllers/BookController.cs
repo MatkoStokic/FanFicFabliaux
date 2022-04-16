@@ -1,9 +1,9 @@
 ﻿using FanFicFabliaux.Data;
+using FanFicFabliaux.Models;
 using FanFicFabliaux.Models.ViewModels;
 using FanFicFabliaux.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using static FanFicFabliaux.Models.ViewModels.ChooseBookModel;
@@ -18,6 +18,7 @@ namespace FanFicFabliaux.Controllers
         private readonly ReadBookService _readBookService;
         private readonly BookDataService _bookDataService;
         private readonly SubscriptionService _subscriptionService;
+        private readonly WishlistService _wishlistService;
 
         public BookController(
             ApplicationDbContext dbContext,
@@ -25,7 +26,8 @@ namespace FanFicFabliaux.Controllers
             CategoryService categoryService,
             ReadBookService readBookService,
             BookDataService bookDataService,
-            SubscriptionService subscriptionService)
+            SubscriptionService subscriptionService,
+            WishlistService wishlistService)
         {
             this.dbContext = dbContext;
             _writeBookService = writeBookService;
@@ -33,6 +35,7 @@ namespace FanFicFabliaux.Controllers
             _readBookService = readBookService;
             _bookDataService = bookDataService;
             _subscriptionService = subscriptionService;
+            _wishlistService = wishlistService;
         }
 
         [AllowAnonymous]
@@ -161,6 +164,21 @@ namespace FanFicFabliaux.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _bookDataService.RateBook(bookId, userId, rating);
             return "";
+        }
+
+        [Authorize]
+        public IActionResult Wishlist()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(_wishlistService.MapBooksToWishlistModel(userId));
+        }
+
+        [Authorize]
+        [HttpPost]
+        public bool AddToWishlist(BookDataModel bookDataModel, bool IsOnWishlist)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _wishlistService.AddToWishlist(bookDataModel.Book.Id, userId, IsOnWishlist);
         }
     }
 }

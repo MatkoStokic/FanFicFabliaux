@@ -61,9 +61,13 @@
         <div class="col-sm">
             <a class="btn btn-secondary" asp-area="" asp-controller="Book" asp-action="Index">Download</a>
         </div>
-        <div class="col-sm">
-            <a class="btn btn-danger" asp-area="" asp-controller="Book" asp-action="Index"><i class="far fa-heart"></i>Add to wishlist</a>
-        </div>
+        <form asp-controller="Book" asp-action="AddToWishlist" method="post">
+            <input type="hidden" asp-for="Book.Id" />
+            <input type="hidden" asp-for="IsOnWishlist" />
+            <div class="col-sm">
+                <button class="btn btn-danger" type="submit"><i class="far fa-heart"></i>Add to wishlist</button>
+            </div>
+        </form>
     </div>
 
     <div class="row my-3">
