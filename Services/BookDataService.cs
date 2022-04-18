@@ -1,6 +1,7 @@
 ﻿using FanFicFabliaux.Data;
 using FanFicFabliaux.Models;
 using FanFicFabliaux.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace FanFicFabliaux.Services
 
         public BookDataModel GetModel(int bookId, string userId)
         {
-            Book book = _context.Books.Find(bookId);
+            Book book = _context.Books.Include(b => b.User).Where(b => b.Id == bookId).FirstOrDefault();
 
             if (book == null)
             {
