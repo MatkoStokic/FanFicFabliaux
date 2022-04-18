@@ -37,7 +37,7 @@ namespace FanFicFabliaux.Controllers
             _wishlistService = wishlistService;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Index()
         {
             return View(this.dbContext.Books);
@@ -87,7 +87,7 @@ namespace FanFicFabliaux.Controllers
             return View("WriteBook", model);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult ChooseBook(BookFilter filter)
         {
             ChooseBookModel model = new ChooseBookModel
@@ -100,7 +100,7 @@ namespace FanFicFabliaux.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult BookData(int bookId)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -122,7 +122,7 @@ namespace FanFicFabliaux.Controllers
             return _subscriptionService.Subscribe(AuthorId, userId, IsSubscribed);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Read(int bookId)
         {
             var file = _readBookService.GetPdfById(bookId);
@@ -135,7 +135,7 @@ namespace FanFicFabliaux.Controllers
             return File(file, "application/pdf");
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Download(int bookId)
         {
             var file = _readBookService.GetPdfById(bookId);
