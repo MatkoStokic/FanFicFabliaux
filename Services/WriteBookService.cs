@@ -31,7 +31,7 @@ namespace FanFicFabliaux.Services
             _subscriptionService = subscriptionService;
         }
 
-        public async Task WriteBook(string userId, WriteBookModel.InputModel Input)
+        public async Task WriteBook(string userId, WriteBookModel.InputModel Input, string author)
         {
             var uniqueFileName = Guid.NewGuid().ToString().Substring(0, 16) + ".pdf";
             var uploads = Path.Combine(_hostEnviroment.WebRootPath, "upload");
@@ -47,11 +47,11 @@ namespace FanFicFabliaux.Services
                 await Input.Datoteka.CopyToAsync(stream);
             }
 
-            Book book = await SaveToDb(userId, Input.Naslov, Input.Oznake, Input.Zanr.Value, uniqueFileName);
+            Book book = await SaveToDb(userId, Input.Naslov, Input.Oznake, Input.Zanr.Value, uniqueFileName, author);
             await _subscriptionService.SendMailToSubscribersAsync(userId, book.Id);
         }
 
-        private async Task<Book> SaveToDb(string userId, string naslov, string oznake, int zanr, string uniqueFileName)
+        private async Task<Book> SaveToDb(string userId, string naslov, string oznake, int zanr, string uniqueFileName, string author)
         {
             Book book = new Book
             {
@@ -60,7 +60,8 @@ namespace FanFicFabliaux.Services
                 URL = uniqueFileName,
                 IssueDate = DateTime.Now,
                 LastUpdateDate = DateTime.Now,
-                CategoryId = zanr
+                CategoryId = zanr,
+                Author = author
             };
 
             await _context.Books.AddAsync(book);

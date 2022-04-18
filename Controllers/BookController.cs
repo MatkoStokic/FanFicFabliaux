@@ -74,7 +74,8 @@ namespace FanFicFabliaux.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await _writeBookService.WriteBook(userId, Input);
+                var author = User.FindFirstValue(ClaimTypes.Name);
+                await _writeBookService.WriteBook(userId, Input, author);
                 return LocalRedirect("~/");
             }
 
