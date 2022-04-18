@@ -116,7 +116,15 @@ namespace FanFicFabliaux.Services
             var uploads = Path.Combine(_hostEnviroment.WebRootPath, "upload");
             var filePath = Path.Combine(uploads, book.URL);
 
-            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream stream;
+            try
+            {
+                stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            }
+            catch (FileNotFoundException)
+            {
+                return null;
+            }
 
             return stream;
         }
