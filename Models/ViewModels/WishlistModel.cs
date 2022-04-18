@@ -8,7 +8,6 @@ namespace FanFicFabliaux.Models.ViewModels
         public string Author { get; set; }
         public int Length { get; set; }
         public string Category { get; set; }
-
         [BindProperty]
         public Book Book { get; set; }
     }
