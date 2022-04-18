@@ -32,8 +32,9 @@ namespace FanFicFabliaux.Services
                     Title = book.Title,
                     Author = book.Author,
                     Length = book.Length,
-                    Category = book.Category.CategoryName
-                });
+                    Category = book.Category.CategoryName,
+                    Book = book
+                }) ;
             }
 
             return wishlist;
