@@ -32,8 +32,20 @@ namespace FanFicFabliaux.Services
                 AverageRating = GetAverageRating(bookId),
                 IsSubscribed = IsSubscribed(userId, book),
                 Comments = GetComments(bookId),
-                UserRating = GetUserRating(bookId, userId)
+                UserRating = GetUserRating(bookId, userId),
+                IsOnWishlist = IsOnWishlist(bookId, userId)
             };
+        }
+
+        private bool IsOnWishlist(int bookId, string userId)
+        {
+            var bookState = _context.BookStates.Where(bs => bs.UserId == userId && bs.BookId == bookId).FirstOrDefault();
+            
+            if(bookState is null)
+            {
+                return false;
+            }
+            else return bookState.IsOnWishList;
         }
 
         public void SaveComment(int bookId, string userId, string commentText)

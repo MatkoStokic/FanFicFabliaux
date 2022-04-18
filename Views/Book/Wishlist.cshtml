@@ -7,18 +7,18 @@
 <h1 class="m-4">Wishlist</h1>
 
 
-
-
 @foreach (var item in Model)
 {
-    <a class="list-group-item list-group-item-action my-2" aria-current="true"
-              href="@Url.Action("BookData", "Book", new { bookId = item.Book.Id })">
-        <div class="d-flex w-50 justify-content-between">
-            <h5 class="mb-1">  @Html.DisplayFor(modelItem => item.Title)</h5>
 
-        </div>
-        <p class="mb-1">  @Html.DisplayFor(modelItem => item.Author)</p>
-        <p class="mb-1"> @Html.DisplayFor(modelItem => item.Category)</p>
-    </a>
+    <div>
+        <a class="list-group-item list-group-item-action my-2" aria-current="true"
+           href="@Url.Action("BookData", "Book", new { bookId = item.Book.Id })">
+            <div class="d-flex w-50 justify-content-between">
+                <h5 class="mb-1">  @Html.DisplayFor(modelItem => item.Title)</h5>
+
+            </div>
+            <p class="mb-1">  @Html.DisplayFor(modelItem => item.Author)</p>
+            <p class="mb-1"> @Html.DisplayFor(modelItem => item.Category)</p>
+        </a>
+    </div>
 }
-

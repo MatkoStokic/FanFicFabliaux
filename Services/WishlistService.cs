@@ -2,6 +2,7 @@
 using FanFicFabliaux.Models;
 using FanFicFabliaux.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +19,7 @@ namespace FanFicFabliaux.Services
 
         public ICollection<WishlistModel> MapBooksToWishlistModel(string userId)
         {
-            var bookStates = _context.BookStates.Where(bs => bs.UserId == userId).Where(bs => bs.IsOnWishList).ToList();
+            var bookStates = _context.BookStates.Where(bs => bs.UserId == userId).Where(bs => bs.IsOnWishList == true).ToList();
 
 
             var wishlist = new List<WishlistModel>();
@@ -40,20 +41,9 @@ namespace FanFicFabliaux.Services
             return wishlist;
         }
 
-        public bool AddToWishlist(int bookId, string userId, bool isOnWishlist)
+        public void AddToWishlist(int bookId, string userId)
         {
-            if (isOnWishlist)
-            {
-                _context.BookStates.Remove(new BookState()
-                {
-                    IsOnWishList = true,
-                    BookId = bookId,
-                    UserId = userId
-                });
-
-                isOnWishlist = false;
-            }
-            else
+            if (!BookStateExists(bookId, userId))
             {
                 _context.BookStates.Add(new BookState()
                 {
@@ -61,14 +51,43 @@ namespace FanFicFabliaux.Services
                     BookId = bookId,
                     UserId = userId
                 });
+            }
+            else
+            {
+                var update = _context.BookStates.Where(bs => bs.BookId == bookId && bs.UserId == userId).FirstOrDefault();
 
-                isOnWishlist = true;
+                update.IsOnWishList = true;
+
+                _context.BookStates.Update(update);
             }
 
             _context.SaveChanges();
 
-            return isOnWishlist;
+            //return isOnWishlist;
 
+        }
+
+
+        public void RemoveFromWishlist(int bookId, string userId)
+        {
+            var update = _context.BookStates.Where(bs => bs.BookId == bookId && bs.UserId == userId).FirstOrDefault();
+            update.IsOnWishList = false;
+
+            _context.Update(update);
+
+            _context.SaveChanges();
+
+            //return isOnWishlist;
+
+        }
+        
+        
+        private bool BookStateExists(int bookId, string userId)
+        {
+            var bookState = _context.BookStates.Where(bs => bs.BookId == bookId && bs.UserId == userId).FirstOrDefault();
+            if (bookState is null)
+                return false;
+            else return true;
         }
     }
 }

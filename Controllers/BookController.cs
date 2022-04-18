@@ -175,10 +175,23 @@ namespace FanFicFabliaux.Controllers
 
         [Authorize]
         [HttpPost]
-        public bool AddToWishlist(BookDataModel bookDataModel, bool IsOnWishlist)
+        public IActionResult AddToWishlist(BookDataModel bookDataModel)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _wishlistService.AddToWishlist(bookDataModel.Book.Id, userId, IsOnWishlist);
+            _wishlistService.AddToWishlist(bookDataModel.Book.Id, userId);
+
+            return RedirectToAction("Wishlist", _wishlistService.MapBooksToWishlistModel(userId));
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult RemoveFromWishlist(BookDataModel bookDataModel)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _wishlistService.RemoveFromWishlist(bookDataModel.Book.Id, userId);
+
+            return RedirectToAction("Wishlist", _wishlistService.MapBooksToWishlistModel(userId));
+        }
+
     }
 }

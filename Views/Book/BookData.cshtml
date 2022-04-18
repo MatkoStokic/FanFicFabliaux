@@ -13,14 +13,15 @@
                 <button class="btn btn-secondary">Read book</button>
             </form>
 
-            <div class="mx-2 d-inline-block align-bottom itemes btn btn-secondary">
-                @Html.ActionLink("Download", "Download", "Book", new { bookId = Model.Book.Id }, null)
-            </div>
+            <a href="@Url.Action("Download", "Book", new { bookId = Model.Book.Id })">
+                <div class="mx-2 d-inline-block align-bottom itemes btn btn-secondary">
+                    Download
+                </div>
+            </a>
         </div>
         <div class="col-12 border-top border-secondary my-5">
             <p></p>
         </div>
-
     </div>
 
     <div class="row mb-5">
@@ -65,15 +66,24 @@
                     </div>
                 </p>
             }
-
         </div>
-        <form asp-controller="Book" asp-action="AddToWishlist" method="post">
-            <input type="hidden" asp-for="Book.Id" />
-            <input type="hidden" asp-for="IsOnWishlist" />
-            <div class="col-sm">
-                <button class="btn btn-danger" type="submit"><i class="far fa-heart"></i>Add to wishlist</button>
-            </div>
-        </form>
+        @if (!Model.IsOnWishlist)
+        {
+            <form asp-controller="Book" asp-action="AddToWishlist" method="post">
+                <input type="hidden" asp-for="Book.Id" />
+                <div class="col-sm">
+                    <button class="btn btn-danger" type="submit"><i class="far fa-heart"></i>Add to wishlist</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form asp-controller="Book" asp-action="RemoveFromWishlist" method="post">
+                <input type="hidden" asp-for="Book.Id"/>
+                <button class="btn btn-danger" type="submit">Remove from wishlist</button>
+
+            </form>
+        }
         <div class="col-2">
             @if (User.Identity.IsAuthenticated)
             {
@@ -90,7 +100,7 @@
                    class="btn btn-secondary"><i class="fa-regular fa-bell m-1"></i>Subscribe</a>
             }
         </div>
-  </div>
+    </div>
     <div class="row">
 
         <section class="col-12" style="background-color: #eee;">
