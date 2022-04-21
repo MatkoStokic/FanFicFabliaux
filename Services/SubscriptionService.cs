@@ -7,17 +7,29 @@ using System.Threading.Tasks;
 
 namespace FanFicFabliaux.Services
 {
+    /// <summary>
+    /// Contains methods related to subscription.
+    /// </summary>
     public class SubscriptionService
     {
         private readonly ApplicationDbContext _context;
         private readonly MailService _mailService;
-
+        /// <summary>
+        /// Initializes SubscriptionService.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mailService"></param>
         public SubscriptionService(ApplicationDbContext context, MailService mailService)
         {
             _context = context;
             _mailService = mailService;
         }
-
+        /// <summary>
+        /// Sendes email to subscriber.
+        /// </summary>
+        /// <param name="authorId">Author id.</param>
+        /// <param name="bookId">Book id.</param>
+        /// <returns></returns>
         public async Task SendMailToSubscribersAsync(string authorId, int bookId)
         {
             List<Subscription> subscriptions = _context.Subscriptions

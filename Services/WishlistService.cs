@@ -7,15 +7,25 @@ using System.Linq;
 
 namespace FanFicFabliaux.Services
 {
+    /// <summary>
+    /// Contains methods related to whislist.
+    /// </summary>
     public class WishlistService
     {
         private readonly ApplicationDbContext _context;
-
+        /// <summary>
+        /// Initializes WhishlistService.
+        /// </summary>
+        /// <param name="context"></param>
         public WishlistService(ApplicationDbContext context)
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Gets all books whishlisted by the user.
+        /// </summary>
+        /// <param name="userId">User id.</param>
+        /// <returns>Whishlist</returns>
         public ICollection<WishlistModel> MapBooksToWishlistModel(string userId)
         {
             var bookStates = _context.BookStates.Where(bs => bs.UserId == userId).Where(bs => bs.IsOnWishList).ToList();
@@ -39,7 +49,13 @@ namespace FanFicFabliaux.Services
 
             return wishlist;
         }
-
+        /// <summary>
+        /// Adds book to whishlist.
+        /// </summary>
+        /// <param name="bookId">Book id.</param>
+        /// <param name="userId">User id.</param>
+        /// <param name="isOnWishlist">Is book on whishlist.</param>
+        /// <returns>Is book in whishlist.</returns>
         public bool AddToWishlist(int bookId, string userId, bool isOnWishlist)
         {
             if (isOnWishlist)

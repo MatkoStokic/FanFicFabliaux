@@ -9,12 +9,20 @@ using static FanFicFabliaux.Models.ViewModels.ChooseBookModel;
 
 namespace FanFicFabliaux.Services
 {
+    /// <summary>
+    /// Contains all methods related to reading books.
+    /// </summary>
     public class ReadBookService
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostEnviroment;
         private readonly IConverter _converter;
-
+        /// <summary>
+        /// Initializes ReadBookService.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="hostEnviroment"></param>
+        /// <param name="converter"></param>
         public ReadBookService(
             ApplicationDbContext context,
             IWebHostEnvironment hostEnviroment,
@@ -24,7 +32,11 @@ namespace FanFicFabliaux.Services
             _hostEnviroment = hostEnviroment;
             _converter = converter;
         }
-
+        /// <summary>
+        /// Filters books by selected filter.
+        /// </summary>
+        /// <param name="filter">Book filter.</param>
+        /// <returns>List of filtered books.</returns>
         public List<Book> GetBooksByFilter(BookFilter filter)
         {
             List<Book> books;

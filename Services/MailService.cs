@@ -8,14 +8,25 @@ using System.Threading.Tasks;
 
 namespace FanFicFabliaux.Services
 {
+    /// <summary>
+    /// Contains methods related to mail.
+    /// </summary>
     public class MailService
     {
         private readonly MailSettings _mailSettings;
+        /// <summary>
+        /// Initializes MailService.
+        /// </summary>
+        /// <param name="mailSettings"></param>
         public MailService(IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value;
         }
-
+        /// <summary>
+        /// Sends subscription e-mail to subscriber.
+        /// </summary>
+        /// <param name="request">Request.</param>
+        /// <returns></returns>
         public async Task SendSubscriptionEmailAsync(SubscriptionMail request)
         {
             string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\SubscriptionTemplate.html";
@@ -35,7 +46,11 @@ namespace FanFicFabliaux.Services
 
             await SendEmailAsync(request);
         }
-
+        /// <summary>
+        /// Sends e-mail.
+        /// </summary>
+        /// <param name="mailRequest">Request.</param>
+        /// <returns></returns>
         public async Task SendEmailAsync(MailRequest mailRequest)
         {
             var email = new MimeMessage();

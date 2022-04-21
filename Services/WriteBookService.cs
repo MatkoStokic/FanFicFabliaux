@@ -12,13 +12,22 @@ using WkHtmlToPdfDotNet.Contracts;
 
 namespace FanFicFabliaux.Services
 {
+    /// <summary>
+    /// Contains methods related to writing books.
+    /// </summary>
     public class WriteBookService
     {
         private readonly IWebHostEnvironment _hostEnviroment;
         private readonly IConverter _converter;
         private readonly ApplicationDbContext _context;
         private readonly SubscriptionService _subscriptionService;
-
+        /// <summary>
+        /// Initializes WriteBookService.
+        /// </summary>
+        /// <param name="hostEnviroment"></param>
+        /// <param name="converter"></param>
+        /// <param name="context"></param>
+        /// <param name="subscriptionService"></param>
         public WriteBookService(
             IWebHostEnvironment hostEnviroment,
             IConverter converter,
@@ -30,7 +39,13 @@ namespace FanFicFabliaux.Services
             _context = context;
             _subscriptionService = subscriptionService;
         }
-
+        /// <summary>
+        /// Saves writen book to database.
+        /// </summary>
+        /// <param name="userId">User id.</param>
+        /// <param name="Input">Writen book.</param>
+        /// <param name="author">Author name.</param>
+        /// <returns></returns>
         public async Task WriteBook(string userId, WriteBookModel.InputModel Input, string author)
         {
             var uniqueFileName = Guid.NewGuid().ToString().Substring(0, 16) + ".pdf";
@@ -101,6 +116,12 @@ namespace FanFicFabliaux.Services
             return book;
         }
 
+        /// <summary>
+        /// Generates pdf for writen book.
+        /// </summary>
+        /// <param name="naslov">Title.</param>
+        /// <param name="tekst">Book text.</param>
+        /// <param name="path">path.</param>
         public void GeneratePdf(string naslov, string tekst, string path)
         {
             var html = $@"

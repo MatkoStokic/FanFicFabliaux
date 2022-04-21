@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-FanFicFabliaux-0AB23338-5434-41BF-85B3-750E8313A779</UserSecretsId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>D:\Projekti\documentation\Documentation.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
